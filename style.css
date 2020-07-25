@@ -1,0 +1,873 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;700&display=swap');
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+html {
+    font-size: 10px;
+    font-family: 'Montserrat', sans-serif;
+    scroll-behavior: smooth;
+}
+
+a {
+    text-decoration: none;
+}
+
+.container {
+    min-height: 100vh;
+    width: 100%;
+    display: flex;
+    align-items: center; /*adjusts vertical alignment */
+    justify-content: center;
+    
+}
+
+/*#services .icon Made it general for all images*/ img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+/*#services .service-item Here also generalisation for any paragraph that we have*/ p {
+    /*color: white;*/
+    font-size: 1.4rem;
+    /* line-height: 1.9rem; */
+    margin-top: 5px;
+    line-height: 2.5rem;
+    font-weight: 300;
+    letter-spacing: 0.05rem; /*No Need as generalised above*/
+}
+
+/*#services .service-title made common for all titles, hence changed the name of the .service-title class to a common name section-title*/ .section-title {
+    font-size: 4rem;
+    font-weight: 300;
+    margin-bottom: 10px;
+    letter-spacing: .2rem;
+}
+
+/* #services .service-title*/ .section-title span { 
+    /* color: crimson; */
+    color: #62d13c;
+}
+
+/*#hello generalised the button effects*/.cta {
+    display: inline-block;
+    padding: 10px 20px;
+    font-size: 2rem;
+    color: #62d13c;
+    
+    background-color: transparent;
+    border: 2px solid;
+    text-transform: uppercase;
+    margin-top: 30px;
+    transition: .3s ease;
+    transition-property: background-colors border-color;
+}
+
+.cta:hover {
+    color: black;
+    border-color: #62d13c;
+    background-color: #62d13c;
+}
+
+.brand h1{
+    font-size: 3rem;
+    color: white;
+}
+
+.brand h2{
+    font-size: 1.8rem;
+    font-weight: 500;
+    color: white;
+    text-align: center;
+    letter-spacing: .1rem;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+.brand h1 span {
+    color: #62d13c;
+}
+/*Header Section*/
+
+#header {
+    position: fixed;
+    z-index: 2;
+    left: 0;
+    top: 0;
+    width: 100vw;
+    height: auto;
+}
+
+#header .header {
+    min-height: 8vh;
+    background-color: rgba(31, 30, 30, 0.24);
+    transition: 3s ease background-color;
+}
+
+.header .nav-bar {
+    display: flex;
+    /* flex-direction: row; */
+    align-items: center;
+    justify-content: space-between;/*so that the brand as well as the navbar stay separated, on the opposite ends, even when the web page is stretched*/
+    width: 100%; 
+    height: 100%;
+    max-width: 1300px;
+    padding: 0 10px;
+    text-align: center;
+}
+
+#header .nav-list ul {
+    list-style: none; /*need it so that our bullets don't appear for unordered list*/
+    position: absolute;
+    background-color: rgb(31, 30, 30);
+    width: 100vw;
+    height: 100vh;
+    left: 100%;
+    top: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    z-index: 1;
+    overflow-x: hidden;/*need it bcoz we will animate the page with hamburger menu later, so that there will be no horizontal scroll-over*/
+    transition: .5s ease left;
+}
+
+#header .nav-list ul.active {
+    left: 0%;
+}
+
+
+#header .nav-list ul a{
+    font-size: 2.5rem;
+    font-weight: 500;
+    letter-spacing: .2rem;
+    text-decoration: none;
+    color: white; 
+    text-transform: uppercase;
+    padding: 20px;
+    display: block; /*separated/spread the icons widely on the screen */
+}
+
+#header .nav-list ul a::after {
+    /* content: 'wassup'; */
+    content: attr(data-after);
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%) scale(0);/*so that when when not hovering, don't display background text*/
+	color: rgba(240, 248, 255, 0.021);
+	font-size: 13rem;
+	letter-spacing: 50px;
+	z-index: -1;
+	transition: .3s ease letter-spacing;
+}
+
+#header .nav-list li:hover a:after { /*ie when li:hover pseudo class happens, do the following in pseudo element a::after*/
+    transform: translate(-50%, -50%) scale(1);
+    letter-spacing: initial;
+}
+
+#header .nav-list li:hover a span {
+    color: white;
+}
+
+#header .nav-list li:hover a:nth-child(odd) {
+    color: #62d13c;
+}
+
+#header .hamburger {
+    z-index: 110;
+    height: 60px;
+    width: 60px;
+    display: inline-block;
+    border: 3px solid white;
+    border-radius: 50%;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transform: scale(0.8);
+    margin-right: 20px;
+}
+
+#header .hamburger::after {
+    position: absolute;
+    content: "";
+    height: 100%;
+    width: 100%;
+    border: 3px solid white;
+    border-radius: 50%;
+    animation: hamburger_pulse 2s ease infinite;
+}
+
+#header .hamburger .bar {
+    height: 2px;
+    width: 30px ;
+    position: relative;
+    background-color: white;
+    z-index: -1;
+}
+
+#header .hamburger .bar::before,
+#header .hamburger .bar::after {
+    content: '';
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    left: 0;
+    background-color: white;
+    /* transition: 0.3s ease;
+    transition-property: top,bottom; */
+
+    transition: .3s ease transform; 
+}
+#header .hamburger .bar::before {
+    /* height: 2px;
+    width: 30px ; */
+    /* position: relative; */
+    /* background-color: white;
+    z-index: -12; */
+    top: 8px; /*Distance from top of the element(downward direction positive, example if inside a box, +ve distance from top makes inward movement towards the centre*/
+    /*in this case, since the object concerned is just a bar(a line), positive distance from top actually results in the new bar appearing below the original bar*/ 
+    /* background-color: yellow; */
+    background-color: white;
+
+}
+
+#header .hamburger .bar::after {
+    /* height: 2px;
+    width: 30px ; */
+    /* position: relative;
+    background-color: white; */
+    /* z-index: -12; */
+    bottom: 8px;/*Distance from bottom of the element(upward direction positive, example if inside a box, +ve distance from bottom makes inward movement towards the centre)*/
+    /*in this case, since the object concerned is just a bar(a line), positive distance from bottom actually results in the new bar appearing above the original bar*/ 
+    /* background-color: green; */
+    background-color: white;
+}
+
+#header .hamburger.active .bar::before{
+    top: 0;
+    transform: rotate(45deg);
+}
+
+#header .hamburger.active .bar::after{
+    top: 0;
+    transform: rotate(-45deg);
+}
+
+#header .hamburger.active .bar{
+    background-color: transparent;
+}
+
+
+
+#header .nav-list ul a span {
+    color: #62d13c;
+}
+/*End Header Section*/
+
+/*Hello Section*/
+#hello {
+    /* background-image: url('https://cdn1.vectorstock.com/i/1000x1000/18/35/programmers-future-workplace-vector-22231835.jpg'); */
+    background-image: url('img/photography-of-macbook-half-opened-on-white-wooden-surface-633409.jpg');
+    /*background-image: url('https://jaxenter.com/wp-content/uploads/2019/09/shutterstock_753972046-350x233.jpg');*/
+    /*background-size: 500%;*/
+    background-size: cover;
+    /*background-repeat: no-repeat;*/
+    /* object-fit: cover; */
+    background-position: left top;
+    /*width : 100%; 
+    /*height: 200vh;*/
+    /*justify-content: center;*/
+
+    position: relative;
+    z-index: 1;
+}
+
+/*Overlay(done using after, ie, so that contents underlying are rendered first, then after it the overlay*/
+#hello::after {
+    content: '';
+    position: absolute; /*has to be this or fixed for z-index to work, or create new/override old the stack order */
+    left: 0;
+    top: 0;
+    height: 100%;
+    width: 100%;
+    /* background-color: black; */
+    background-color: 	#808080 ;
+    opacity: 0;
+    z-index: -1;
+}
+
+#hello .hello {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 50px;
+    justify-content: flex-start;
+
+}
+
+#hello h1 {
+    display: block;
+    width: fit-content;
+    font-size: 4rem;
+    position: relative;
+    /*color: white;*/
+    color: transparent;
+    animation: text_reveal 0.5s ease forwards;
+    /* animation-delay: 1s; */
+}
+
+#hello h1:nth-child(1) {
+    animation-delay: 1s; /*this delay overrides the animation delay of the parent(commented out above)*/
+}
+
+#hello h1:nth-child(2) {
+    animation-delay: 2s;
+}
+
+#hello h1:nth-child(3) {
+    animation: text_reveal_name .5s ease forwards;
+    animation-delay: 3s;
+}
+
+#hello h1 span { /*span part is for the box*/
+    position: absolute; /* absoulte bcz it will be relative to ancestor/parent, which is h1(relative) here*/
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 0;
+    background-color: #62d13c;
+    animation: text_reveal_box 1s ease;
+    /* animation-delay: 0.5s; */
+}
+
+#hello h1:nth-child(1) span {
+    animation-delay: 0.5s;
+}
+
+#hello h1:nth-child(2) span { 
+    animation-delay: 1.5s;
+}
+
+#hello h1:nth-child(3) span {
+    animation-delay: 2.5s;
+}
+
+/*End Hello Section*/
+
+/*Services Section*/
+
+#services .service {
+    flex-direction: column; /*Required bcz by default the container class defined above) made its flex direction row by default*/
+    text-align: center;
+    max-width: 1200px;/*can be 1500px?*/
+    margin: 0 auto;
+    padding: 100px 0;
+}
+
+/* #services .service-title {
+    font-size: 4rem;
+    font-weight: 300;
+    margin-bottom: 10px;
+    letter-spacing: .2rem;
+}
+
+#services .service-title span {
+    color: crimson;
+} made common above*/
+
+#services .service-top p {
+    color: black;
+    /* font-size: 1.4rem;
+    margin-top: 5px;
+    line-height: 2.5rem;
+    font-weight: 300;
+    letter-spacing: 0.05rem; No Need as generalised above*/
+    max-width: 500px;
+    margin: 0 auto;
+}
+
+#services .service-bottom {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap; 
+    margin-top: 50px;
+} 
+
+#services .service-item {
+    color: white; 
+    flex-basis : 80%; /*  Here has same effect as width:100% (in general both flex-basis and width adjust the corresponding other dimension(length/breadth auto if not mentioned explicitly), though in flex direction row, flex-basis takes the value of width  whereas in flex-basis column, it takes the value of height;;*/
+    /*applicable/shows effect/used in mobile-view, overridden in tablet and desktop view with 45% and 22% flex-basis respectively*/
+    display: flex; /*Let's see if it's needed at all or not bcz it must be inherited. Maybe it should be bcz, it's not just a flex item inside a flex contaoner, it itself is also a flexbox/flex container */
+    /*also, properties like align-items, justify-content work only on flex containers (not flex-items)*/
+    align-items : flex-start;
+    text-align: left; 
+    justify-content: center;
+    flex-direction: column;
+    padding: 20px;
+    /* padding-left: 30px; */
+    border-radius: 10px;
+    background-image: url('img/green-plant-near-laptop-3597777.jpg');
+    background-size: cover;
+    background-position: 50% 80%;
+    margin: 10px 5%; /*shows effect when viewing in mobile device, not on desktop or tablet view*/
+    position: relative;
+    z-index: 1;
+    overflow: hidden;
+}
+
+#services .service-item::after {
+    content: '';
+    position: absolute; /*bcz made the service-item relative, so now can make the overlay absolute*/
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    /* background-color: black; */
+    background-image: linear-gradient(60deg, #29323c 0%, #485563 100%);
+    border-radius: 10px;
+    opacity: 0.85;
+    z-index: -1;
+}
+
+#services .icon {
+    height: 80px;
+    width: 80px;
+    margin-bottom: 10px;
+    padding-top: 0px;
+}
+
+#services .service-item h2 {
+    color: white;
+    font-size: 2rem;
+    margin-bottom: 10px;
+}
+
+/* #services .service-item p {
+    line-height: 1.8rem;
+} */
+
+/*End Services Section*/
+
+/*Projects Section*/
+
+#projects .projects {
+    flex-direction: column; /*By using this, the utems of the flex-box will be arranged in a column,(one below another like a stack) insted of a single line as in a row-wise manner*/
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 100px 0;    
+}
+
+#projects .projects-header h1 {
+    margin-bottom: 50px;
+}
+
+#projects .all-projects {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    /* flex-wrap: wrap; */
+    /* margin: 50px; */
+}
+
+#projects .project-item {
+    display: flex;
+    align-items: center;
+    /*flex-basis: 80%; /*It's presence(as of now when we have a h1, and h2 and an image separately as parts of project-item (as compared to a fully fininshed functional service item (all integrated), it's presence makes no(must be unnoticeable as in inspect element, this properrty is not overidden)difference on the overall project tiem*/
+    justify-content: center;    
+    flex-direction: column;
+    border-radius: 10px;
+    /*width: 80%;  /*Doesn't feel like neede, bcz width: 80% makes it smaller than overall complete service item, but will still use it for time being to see if it makes much of a difference*/
+    /* margin: 20px auto;
+    width: 80%; */
+
+    /* background-image: url('img/green-plant-near-laptop-3597777.jpg');
+    background-size: cover;
+    background-position: 50% 80%;
+    margin: 10px 5%; */
+    
+    overflow: hidden;
+}
+
+#projects .project-info {
+    padding: 30px;
+    flex-basis: 50%;
+    /*background-color: blue;Just to test that the background of text is in sync(boundary match boundary) with the image below*/
+    height: 100%;
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    flex-direction: column;
+    background-image: linear-gradient(60deg, #29323c 0%, #485563 100%);
+    color: white;
+}
+
+#projects .project-info h1{
+    font-size: 4rem;
+    font-weight: 500;
+}
+
+#projects .project-info h2{
+    font-size: 1.8rem;
+    font-weight: 500;
+    margin-top: 10px;
+}
+
+#projects .project-item .project-img {
+    flex-basis: 50%;
+    height: 300px;
+    overflow: hidden;
+    position: relative;
+}
+
+#projects .project-item .project-img::after {/*::after for PSEUDO ELEMENT*/
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    height: 100%;
+    width: 100%;
+    background-image: linear-gradient(60deg, #29323c 0%, #485563 100%);
+    opacity: .3;
+}
+
+#projects .project-img img {
+    transition: .3s ease transform;
+}
+#projects .project-item:hover .project-img img {
+    transform: scale(1.1);
+}
+/*End Projects Section*/
+
+/*About Section*/
+
+#about .about {
+    flex-direction: column-reverse; /*bcz designing the mobile-view first, where photo will display below the about description*/
+    text-align: center;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 100px 20px;    
+}
+
+#about .col-left .about-img {
+    width: 250px;
+    height: 360px; 
+    position: relative;
+    border: 10px solid white; /*to create a gap between img and ribbon*/ 
+}
+
+#about .col-left .about-img::after {
+    content: '';
+    position: absolute;
+    left: -30px;
+    top: 20px;
+    width: 98%;
+    height: 98%;
+    border: 7px solid #62d13c;
+    z-index: -1;
+
+}
+
+#about .col-right {
+    width: 100%;
+}
+
+#about .col-right h2 {
+    font-size: 1.8rem;
+    font-weight: 500;
+    letter-spacing: .2rem;
+    margin-bottom: 10px;
+}
+
+
+#about .col-right p {
+    margin-bottom: 10px;
+}
+
+#about .cta {
+    color: black;
+    border-color: #62d13c;
+    margin-bottom: 50px;
+    padding: 10px 20px;
+}
+
+#about .cta:hover {
+    color: white;
+}
+/*End About Section*/
+
+/*Contact Section*/
+#contact .contact {
+    flex-direction: column;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+#contact .all-contacts {
+    width: 400px;
+    /* padding: 20px;
+    margin-right: 50px; */
+}
+
+#contact .contact-item {
+    width: 80%;
+    text-align: center;
+    border-radius: 10px;
+    margin: 30px;
+    padding: 30px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 0px 0px 10px 0px #0000002c;
+    transition: 0.3s ease box-shadow;
+}
+
+#contact .contact-item:hover {
+    box-shadow: 0px 0px 5px 0px #0000002c;
+}
+
+#contact .contact-item .info {
+    width: 70px;
+    margin: 0 auto; /*margin auto is used so that our stuff stays in centre even if we specify some width*/
+    margin-bottom: 10px;
+}
+
+#contact .contact-info h1 {
+    font-size: 2.5rem;
+    font-weight: 500;
+    margin-bottom: 5px;
+}
+
+#contact .contact-info h2 {
+    font-size: 1.3rem;
+    font-weight: 500;
+    line-height: 2rem;
+    /* margin-bottom: 5px; */
+}
+/*End Contact Section*/
+
+/*Footer Section*/
+
+#footer .footer  {
+    background-image: linear-gradient(60deg, #29323c 0%, #485563 100%);
+    min-height: 200px;
+    flex-direction: column;
+    padding-top: 50px;
+    padding-bottom: 10px;
+}
+
+#footer .social-icons {
+    display: flex;
+    margin-bottom: 30px;
+}
+
+#footer .social-item {
+    width: 50px;
+    margin: 0 5px;
+}
+
+#footer .social-item:hover img {
+    transform: scale(1.1);
+}
+
+#footer .social-item img {
+    transition: 0.2s ease transform; /*if place transition property too inside the pseudo class after, then the reverse transition (reverting back to normal state) happens quickly instead of slowly taking 0.3s*/
+}
+
+#footer p {
+    color: white;
+}
+/*End Footer Section*/
+
+/*Key Frames (animations)*/
+
+@keyframes hamburger_pulse {
+    0% {
+        opacity: 1;
+        transform: scale(1);
+    }
+
+    100% {
+        opacity: 0;
+        transform: scale(1.4);
+    }
+    
+}
+
+
+@keyframes text_reveal_box {
+    50% {
+        width: 100%;
+        left: 0;
+    }
+
+    100% {
+        width: 0;
+        left: 100%;
+    }
+}
+
+@keyframes text_reveal {
+    100% {
+        color: #ededed;
+    }
+}
+
+@keyframes text_reveal_name {
+    100% {
+        color: #62d13c;
+        font-weight: 500px;
+    }
+}
+/*End Key Frames (animations)*/
+
+/* Media Queries For Tablet viewing*/
+
+@media only screen and (min-width:768px) {
+    .cta {
+        font-size: 2.5rem;
+        padding: 20px 60px
+    }
+
+    .section-title {
+        font-size: 5.5rem;
+    }
+
+    /*Hello*/
+    #hello h1 {
+        font-size: 5.5rem;
+    }
+    /*End Hello*/
+
+    /*Service*/
+    #services .service-item {
+        flex-basis: 45%;
+        margin: 1.5%;
+    }
+    /*End Service*/
+
+    /*Projects*/
+
+    #projects .project-item {
+        height: 400px;
+        width: 100%;
+        margin: 0;
+        border-radius: 0;
+    }
+
+    #projects .project-item {
+        flex-direction: row;
+    }
+
+    #projects .project-item:nth-child(even) {
+        flex-direction: row-reverse;
+    }
+    /* #projects .container {
+        margin: 0;
+    } */
+    #projects .all-projects .project-img {
+        height: 100%;
+    }
+    /*End Projects*/
+
+    /*About*/
+    #about .about {
+        flex-direction: row;
+    }
+
+    #about .col-left {
+        padding-left: 50px;
+    }
+
+    #about .col-right {
+        text-align: left;
+        padding: 30px;
+        padding-top: 50px;
+    }
+    /*End About*/
+
+    /*Contact*/
+    #contact .contact{
+        flex-direction: column;
+        padding: 100px 0;
+        align-items: center;
+        justify-content: center;
+        min-width: 20vh;
+    }
+
+    #contact .all-contacts {
+        width: 100%;
+        display: flex;
+        flex-direction: row;
+        margin: 0;
+        justify-content: space-evenly;
+        justify-content: center;
+        padding: 20px; 
+    }
+
+    #contact .contact-item {
+        width: 30%;
+        margin: 20px;
+        flex-direction: row;
+    }
+    #contact .contact-item .icon {
+        height: 100px;
+        width: 100px;
+    }
+
+    #contact .contact-item .icon img {
+        object-fit: contain;
+    }
+
+    #contact .contact-item .contact-info {
+        width: 100%;
+        text-align: left;
+        padding-left: 10px;
+    }
+ 
+    /*End contact*/
+}
+/* End Media Queries For Tablet viewing*/
+
+/* Media Queries For Desktop viewing*/
+@media only screen and (min-width:1200px) {
+    #services .service-bottom .service-item {
+        flex-basis: 22%;
+        margin: 1.5%;
+    }
+
+    #header .hamburger {
+        display: none;
+    }
+
+    #header .nav-list ul {
+        position: initial;
+        display: block;
+        height: auto;
+        width: fit-content; 
+        background-color: transparent;       
+    }
+
+    #header .nav-list ul li {
+        display: inline-block;
+    }
+
+    #header .nav-list ul li a {
+        font-size: 1.8rem;
+    }
+
+    #header .nav-list ul a:after {
+        display: none;
+    }
+}
+
+/* End Media Queries For Desktop viewing*/
